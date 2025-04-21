@@ -1,0 +1,39 @@
+body {
+  padding-top: 70px;
+}
+
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://via.placeholder.com/1500x600") no-repeat center/cover;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand img {
+  transition: transform 0.3s;
+}
+
+.navbar-brand img:hover {
+  transform: scale(1.1);
+}
+
+.bi {
+  margin-bottom: 1rem;
+}
+
+.alert {
+  margin-top: 1rem;
+}
+
+#map {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#qrcode {
+  margin: auto;
+  max-width: 200px;
+}
+
+//
