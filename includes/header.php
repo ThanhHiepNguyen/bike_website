@@ -31,7 +31,7 @@ $registerPath = $baseDir . '/register.php';
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/custom.css">
-    
+
     <style>
         :root {
             --primary-color: #28a745;
@@ -42,7 +42,8 @@ $registerPath = $baseDir . '/register.php';
 
         body {
             font-family: 'Roboto', sans-serif;
-            padding-top: 76px; /* Height of navbar */
+            padding-top: 76px;
+            /* Height of navbar */
         }
 
         /* Navbar Styles */
@@ -67,7 +68,7 @@ $registerPath = $baseDir . '/register.php';
         }
 
         .navbar-brand img {
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
         }
 
         /* Navigation Links */
@@ -116,6 +117,7 @@ $registerPath = $baseDir . '/register.php';
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -167,7 +169,8 @@ $registerPath = $baseDir . '/register.php';
         }
 
         /* Button Styles */
-        .btn-login, .btn-register {
+        .btn-login,
+        .btn-register {
             padding: 0.5rem 1.5rem !important;
             border-radius: 30px;
             font-weight: 500;
@@ -211,7 +214,8 @@ $registerPath = $baseDir . '/register.php';
                 display: none;
             }
 
-            .btn-login, .btn-register {
+            .btn-login,
+            .btn-register {
                 margin: 0.5rem 0;
                 display: block;
                 text-align: center;
@@ -254,18 +258,20 @@ $registerPath = $baseDir . '/register.php';
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item" href="<?php echo $profilePath; ?>">
-                                    <i class="fas fa-user"></i>Hồ Sơ
-                                </a></li>
+                                        <i class="fas fa-user"></i>Hồ Sơ
+                                    </a></li>
                                 <li><a class="dropdown-item" href="#">
-                                    <i class="fas fa-history"></i>Lịch Sử Đặt Xe
-                                </a></li>
+                                        <i class="fas fa-history"></i>Lịch Sử Đặt Xe
+                                    </a></li>
                                 <li><a class="dropdown-item" href="#">
-                                    <i class="fas fa-heart"></i>Xe Yêu Thích
-                                </a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                        <i class="fas fa-heart"></i>Xe Yêu Thích
+                                    </a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li><a class="dropdown-item text-danger" href="<?php echo $logoutPath; ?>">
-                                    <i class="fas fa-sign-out-alt"></i>Đăng Xuất
-                                </a></li>
+                                        <i class="fas fa-sign-out-alt"></i>Đăng Xuất
+                                    </a></li>
                             </ul>
                         </li>
                     <?php else: ?>
@@ -297,4 +303,5 @@ $registerPath = $baseDir . '/register.php';
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

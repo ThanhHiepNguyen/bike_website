@@ -132,39 +132,73 @@ $ebike = array_filter($all_bikes, fn($b) => $b['bike_type'] === 'ebike');
                 <div class="modal-body">
                     <div class="row text-center">
                         <div class="col-md-4 mb-3">
-                            <div class="card border-primary">
-                                <div class="card-body">
-                                    <h5 class="text-primary fw-bold">Vé lượt</h5>
-                                    <p><strong>10.000</strong> điểm/lượt</p>
-                                    <p>🕒 Thời lượng: 60 phút</p>
-                                    <p>⏳ Hạn dùng: 60 phút</p>
-                                    <p>💳 Quá giờ: 3.000đ / 15 phút</p>
+                            <div class="card h-100 border-primary">
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 class="text-primary fw-bold">Vé lượt</h5>
+                                        <p><strong>10.000</strong> VNĐ/lượt</p>
+                                        <p>🕒 Thời lượng: 60 phút</p>
+                                        <p>⏳ Hạn dùng: 60 phút</p>
+                                        <p>💳 Quá giờ: 3.000đ / 15 phút</p>
+                                    </div>
+                                    <button class="btn btn-primary mt-3 w-100" onclick="startPayment('luot', 10000)">Chọn vé này</button>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <div class="card border-success">
-                                <div class="card-body">
-                                    <h5 class="text-success fw-bold">Vé ngày</h5>
-                                    <p><strong>50.000</strong> điểm/ngày</p>
-                                    <p>🕒 Thời lượng: 450 phút</p>
-                                    <p>⏳ Hạn dùng: 24h</p>
-                                    <p>💳 Quá giờ: 3.000đ / 15 phút</p>
+                            <div class="card h-100 border-success">
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 class="text-success fw-bold">Vé ngày</h5>
+                                        <p><strong>50.000</strong> VNĐ/ngày</p>
+                                        <p>🕒 Thời lượng: 450 phút</p>
+                                        <p>⏳ Hạn dùng: 24h</p>
+                                        <p>💳 Quá giờ: 3.000đ / 15 phút</p>
+                                    </div>
+                                    <button class="btn btn-success mt-3 w-100" onclick="startPayment('ngay', 50000)">Chọn vé này</button>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <div class="card border-warning">
-                                <div class="card-body">
-                                    <h5 class="text-warning fw-bold">Vé tháng</h5>
-                                    <p><strong>79.000</strong> điểm/tháng</p>
-                                    <p>🕒 Miễn phí tất cả chuyến < 45 phút</p>
-                                            <p>⏳ Hạn dùng: 30 ngày</p>
-                                            <p>💳 Quá giờ: 3.000đ / 15 phút</p>
+                            <div class="card h-100 border-warning">
+                                <div class="card-body d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 class="text-warning fw-bold">Vé tháng</h5>
+                                        <p><strong>79.000</strong> VNĐ/tháng</p>
+                                        <p>🕒 Miễn phí tất cả chuyến < 45 phút</p>
+                                                <p>⏳ Hạn dùng: 30 ngày</p>
+                                                <p>💳 Quá giờ: 3.000đ / 15 phút</p>
+                                    </div>
+                                    <button class="btn btn-warning mt-3 w-100" onclick="startPayment('thang', 79000)">Chọn vé này</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Thanh toán -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow">
+                <div class="modal-header">
+                    <h5 class="modal-title text-success">Thanh toán vé</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <p id="ticketType" class="fw-bold mb-2"></p>
+                    <p class="mb-3">Vui lòng quét mã QR sau để thanh toán</p>
+                    <img src="assets/images/qr_momo.png" class="img-fluid mb-3" width="200" alt="QR">
+                    <p>Vui lòng quét mã thanh toán và bấm xác nhận để nhận mã kích hoạt xe</p>
+                    <form id="sendCodeForm">
+                        <input type="hidden" name="plan" id="planHidden">
+                        <input type="hidden" name="price" id="priceHidden">
+                        <button type="submit" class="btn btn-success">Xác nhận thanh toán</button>
+                    </form>
+
+                    <div id="result" class="mt-3"></div>
                 </div>
             </div>
         </div>
@@ -183,7 +217,61 @@ $ebike = array_filter($all_bikes, fn($b) => $b['bike_type'] === 'ebike');
             const modal = new bootstrap.Modal(document.getElementById('pricingModal'));
             modal.show();
         }
+
+        function startPayment(plan, price) {
+            const planText = {
+                'luot': 'Vé lượt (10.000 VNĐ)',
+                'ngay': 'Vé ngày (50.000 VNĐ)',
+                'thang': 'Vé tháng (79.000 VNĐ)'
+            };
+
+            document.getElementById('ticketType').textContent = planText[plan] || 'Loại vé';
+            document.getElementById('planHidden').value = plan;
+            document.getElementById('priceHidden').value = price;
+
+            const qrImg = document.querySelector('#paymentModal img');
+            qrImg.src = `./assets/images/qr_${plan}.png?t=${Date.now()}`; // Tạo đường dẫn ảnh QR
+
+            const modal = new bootstrap.Modal(document.getElementById('paymentModal'));
+            modal.show();
+        }
+
+        document.getElementById('sendCodeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const plan = document.getElementById('planHidden').value;
+            const price = document.getElementById('priceHidden').value;
+
+            // Tạo mã ngẫu nhiên
+            const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+            <div class="alert alert-success">
+                ✅ Thanh toán gói <strong>${plan}</strong> với giá <strong>${price} VNĐ</strong> thành công!<br>
+                <strong>Mã kích hoạt của bạn là:</strong> <span class="text-primary fs-5">${code}</span>
+            </div>
+        `;
+
+            // 🔥 Gọi API lưu lịch sử thuê
+            const response = await fetch('save_rental.php', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    bike_template_id: 1, // Thay bằng ID xe thực tế
+                    plan: plan,
+                    price: price
+                })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                console.log('✅ Đã lưu lịch sử thành công');
+            } else {
+                console.error('⚠️ Lỗi khi lưu lịch sử:', data.message);
+            }
+        });
     </script>
+
 
     <?php require_once 'includes/footer.php'; ?>
 </body>
